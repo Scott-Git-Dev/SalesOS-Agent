@@ -4,6 +4,7 @@ An AI assistant with sales data and knowledge base capabilities
 
 from typing import Optional, List, Generator
 import uuid
+import json
 from langchain_openai import ChatOpenAI
 from langchain.agents import create_agent
 from langchain_core.messages import HumanMessage
@@ -83,7 +84,8 @@ def create_sales_agent(
         checkpointer = InMemorySaver()
     
     # System prompt - defines agent behavior
-        system_prompt = """You are an intelligent business intelligence assistant with access to multiple data sources and tools.
+        system_prompt = """
+You are an intelligent business intelligence assistant with access to multiple data sources and tools.
 
 # CORE DECISION FRAMEWORK
 
@@ -235,7 +237,8 @@ def ask_agent(
             config
         )
         
-        # Extract messages
+
+        
         messages = result["messages"]
         
         #show agent message and tool information when in debug mode

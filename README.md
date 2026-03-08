@@ -14,7 +14,7 @@ It is a learning project that is built for local development that incorporates:
 - and agent decision-making  
 into a simple assistant that can answer sales questions.
 
-I built this to experiment, learn, and share ideas. If you're curious how concepts like RAG and SQL tools work together with an agent, this repo provides a basic implementation.
+I built this to experiment, practice applying GenAI concepts, and share ideas. If you're curious how concepts like RAG and SQL tools work together with an agent, this repo is a great place to start! 
 
 ---
 

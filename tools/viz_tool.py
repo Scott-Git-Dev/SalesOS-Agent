@@ -129,7 +129,7 @@ def create_chart(
         # Create chart based on type
         if chart_type == "bar":
             chart = base.mark_bar(color='steelblue').encode(
-                x=alt.X(f"{x_col}:0", title=x_axis_label, sort=None),
+                x=alt.X(f"{x_col}:O", title=x_axis_label, sort=None),
                 y=alt.Y(f"{y_col}:Q", title=y_axis_label),
                 tooltip=[x_col, y_col]
             )

@@ -31,6 +31,7 @@ os.environ['OPENAI_API_KEY'] = "not_a_real_key"
 LLAMA_SERVER_URL = "http://localhost:8080/v1/"
 MODEL_NAME = "gpt-oss-20b-Q4_K_M.gguf"
 
+
 # LLM parameters
 DEFAULT_TEMPERATURE = 1.0
 DEFAULT_MAX_TOKENS = 6000

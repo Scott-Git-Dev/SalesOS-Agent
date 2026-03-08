@@ -6,6 +6,11 @@ charts/
 logs/
 *.docx
 .matplotviz_tool.py
+tests/eval/results_*.json
+tests/eval/results_*.html
+.coverage.*
+htmlcov/
+
 
 
 # Compiled source #
@@ -17,7 +22,10 @@ logs/
 *.o
 *.so
 /tools/__pycache__/
+.pytest_cache/
+*/.pytest_cache/
 __pycache__/
+*/__pycache__/
  
 # Packages #
 ############
