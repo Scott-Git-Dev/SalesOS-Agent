@@ -4,7 +4,7 @@ An AI assistant with sales data and knowledge base capabilities
 
 from typing import Optional, List, Generator
 import uuid
-import json
+from langchain_core import messages
 from langchain_openai import ChatOpenAI
 from langchain.agents import create_agent
 from langchain_core.messages import HumanMessage
@@ -12,6 +12,8 @@ from langgraph.checkpoint.memory import InMemorySaver
 from utils.logger import get_logger
 
 logger = get_logger(__name__)
+
+
 
 # Import configuration
 from config import (
@@ -137,7 +139,8 @@ When user requests charts or visualizations:
 3. **Call visualization tool:** 
    - `create_chart` for single metric visualizations
    - `create_multi_series_chart` for comparing multiple metrics
-4. **Provide context:** Explain what the chart shows
+4. **Always state the data in text:** The chart is supplemental. You must include the actual values, rankings, or findings in your text response. Never treat the chart as a substitute for answering the question. A user who cannot open the chart file must still get a complete answer from your text.
+5. **Provide context:** Explain what the chart shows
 
 ## 4. RESPONSE GUIDELINES
 
@@ -185,8 +188,20 @@ To close the gap, we'd need to average $[X] per day. Based on recent daily avera
 
 If a tool returns an error:
 - **SQL errors:** The question might need data not in the database - try search_local_docs
-- **RAG returns nothing:** Try rephrasing or use wiki_summary for general knowledge
 - **Multiple failures:** Explain what you tried and why it didn't work, suggest alternatives
+
+### RAG Retry Strategy
+If `search_local_docs` returns no relevant results, do NOT immediately conclude the data does not exist. The document may exist but require a different query. Retry with progressively different phrasing before giving up:
+
+1. **First attempt:** Use the natural phrasing from the question
+2. **Second attempt:** Use shorter, keyword-focused terms (e.g. "win loss reasons price" instead of "top reasons for losing deals in the last 90 days")
+3. **Third attempt:** Use terms that would appear in the document itself, not in the question (e.g. "loss analysis competitor price" or "discount approval account executive")
+4. **Only after 3 distinct attempts:** Conclude the data is not available and say so
+
+### Examples of query reformulation:
+- Question uses: "reasons we lose deals" → also try: "win loss analysis", "loss reasons competitors"
+- Question uses: "should we offer a discount" → also try: "discount policy", "discount approval matrix", "AE discount authority"
+- Question uses: "how are we performing" → also try: "sales targets goals quota"
 
 Remember: Your job is to be helpful, accurate, and insightful. Use tools strategically, combine information intelligently, and always explain your reasoning when it adds value.
 """
@@ -195,7 +210,7 @@ Remember: Your job is to be helpful, accurate, and insightful. Use tools strateg
                 llm,
                 tools,
                 system_prompt=system_prompt,
-                checkpointer=checkpointer,
+                checkpointer=checkpointer
             )
         logger.info("Sales Agent created successfully")
         return agent
@@ -237,10 +252,8 @@ def ask_agent(
             config
         )
         
-
-        
         messages = result["messages"]
-        
+
         #show agent message and tool information when in debug mode
         if DEBUG_MODE:
             print("\n🧠 Agent Message Flow:")

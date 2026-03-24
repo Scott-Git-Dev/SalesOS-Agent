@@ -1,4 +1,3 @@
-#!/usr/bin/env python
 """
 run_tests.py — SalesOS test & evaluation runner
 

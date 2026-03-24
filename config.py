@@ -29,11 +29,11 @@ os.environ['OPENAI_API_KEY'] = "not_a_real_key"
 
 # Llama.cpp server configuration
 LLAMA_SERVER_URL = "http://localhost:8080/v1/"
-MODEL_NAME = "gpt-oss-20b-Q4_K_M.gguf"
+MODEL_NAME = "Qwen3.5-35B-A3B-Q3_K_M.gguf"
 
 
 # LLM parameters
-DEFAULT_TEMPERATURE = 1.0
+DEFAULT_TEMPERATURE = 0.6
 DEFAULT_MAX_TOKENS = 6000
 
 # ============================================================================
@@ -64,8 +64,8 @@ SUPPORTED_FILE_TYPES = {
 
 # Text splitting parameters
 CHUNK_SIZE = 500
-CHUNK_OVERLAP = 100
-TOP_K = 5  # Number of relevant chunks to retrieve for RAG
+CHUNK_OVERLAP = 150
+TOP_K = 8  # Number of relevant chunks to retrieve for RAG
 MIN_RAG_SCORE = 0.4 # Keep chunks with distance <= this value (lower = better)
 
 # ============================================================================
@@ -73,7 +73,7 @@ MIN_RAG_SCORE = 0.4 # Keep chunks with distance <= this value (lower = better)
 # ============================================================================
 
 # Debug mode (shows detailed logs) 
-DEBUG_MODE = False
+DEBUG_MODE = True
 
 #Print SQL queries to console (can be noisy, so separate flag)
 SQL_PRINTING_ENABLED = True

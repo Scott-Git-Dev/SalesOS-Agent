@@ -6,7 +6,6 @@ import sqlite3
 from langchain_core.tools import tool
 from langchain_core.messages import HumanMessage, SystemMessage
 from langchain_openai import ChatOpenAI
-
 # Import config
 import sys
 from pathlib import Path
@@ -42,7 +41,7 @@ def _get_sql_llm():
             model=MODEL_NAME,
             temperature=0.0,
             base_url=LLAMA_SERVER_URL,
-            max_tokens=3500
+            max_tokens=4500
         )
     return _SQL_LLM
 
@@ -206,7 +205,8 @@ Critical SQL Rules:
 Date/Time Patterns:
 - Month grouping: strftime('%Y-%m', sale_date)
 - Year grouping: strftime('%Y', sale_date)
-- Last quarter: date('now', '-3 months')
+- Last quarter start: date('now', 'start of year', '+' || ((cast(strftime('%m', 'now') as integer) - 1) / 3 * 3 - 3) || ' months')
+- Last quarter end:   date('now', 'start of year', '+' || ((cast(strftime('%m', 'now') as integer) - 1) / 3 * 3) || ' months', '-1 day')
 - Last year: date('now', '-1 year')
 - This year: strftime('%Y', sale_date) = strftime('%Y', 'now')
 - Last 30 days: date('now', '-30 days')
@@ -256,6 +256,13 @@ Common Query Templates:
    JOIN regions r ON c.region_id = r.region_id
    WHERE s.status = 'Completed'
    GROUP BY r.region_name
+
+6. Last Quarter Revenue:
+   SELECT SUM(total_amount) as total_revenue
+   FROM sales
+   WHERE status = 'Completed'
+     AND sale_date >= date('now', 'start of year', '+' || ((cast(strftime('%m', 'now') as integer) - 1) / 3 * 3 - 3) || ' months')
+     AND sale_date <  date('now', 'start of year', '+' || ((cast(strftime('%m', 'now') as integer) - 1) / 3 * 3) || ' months')
 
 Customer Name Convention:
 - customers.company = Business/organization name (use for "top customers", "best customers")

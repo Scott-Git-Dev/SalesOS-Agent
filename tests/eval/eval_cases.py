@@ -151,7 +151,7 @@ RAG_CASES = [
         question="What are the top reasons for losing deals in the last 90 days?",
         category="RAG",
         expected_tools=["search_local_docs"],
-        must_contain=["price", "Price", "cost", "cheap"],
+        must_contain=["Price"],
         judge_criteria=(
             "The answer must identify at least 2 of the top loss reasons. "
             "Price should be mentioned as the #1 loss reason."
@@ -170,7 +170,7 @@ MULTI_TOOL_CASES = [
         question="Did we hit our Q1 2025 sales targets?",
         category="MULTI_TOOL",
         expected_tools=["query_sales_database", "search_local_docs"],
-        must_contain=["$15M", "15"],
+        must_contain=["15,000,000"],
         must_not_contain=["I cannot", "insufficient data"],
         judge_criteria=(
             "The answer MUST compare actual Q1 sales (from database) against the $15M target (from docs). "
