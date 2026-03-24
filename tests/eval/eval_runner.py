@@ -30,13 +30,11 @@ from datetime import datetime
 from pathlib import Path
 from typing import Optional
 
-# ── project root on path ────────────────────────────────────────────────────
 ROOT = Path(__file__).parent.parent.parent
 sys.path.insert(0, str(ROOT))
 
 from config import MODEL_NAME, LLAMA_SERVER_URL
 from agent import create_sales_agent, ask_agent
-from langchain_core.messages import AIMessage
 
 from tests.eval.eval_cases import ALL_CASES, CASES_BY_CATEGORY, EvalCase
 from tests.eval.eval_judge import (

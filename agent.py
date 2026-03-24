@@ -4,7 +4,6 @@ An AI assistant with sales data and knowledge base capabilities
 
 from typing import Optional, List, Generator
 import uuid
-from langchain_core import messages
 from langchain_openai import ChatOpenAI
 from langchain.agents import create_agent
 from langchain_core.messages import HumanMessage
@@ -318,7 +317,7 @@ def stream_agent(
     thread_id: Optional[str] = None
 ) -> Generator[str, None, None]:
     """
-    Stream agent responses token by token.
+    Stream agent responses - not true streaming yet, but yields content 
     
     Args:
         agent: The agent instance

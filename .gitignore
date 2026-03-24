@@ -10,7 +10,7 @@ tests/eval/results_*.json
 tests/eval/results_*.html
 .coverage.*
 htmlcov/
-
+.error_handler.py
 
 
 # Compiled source #

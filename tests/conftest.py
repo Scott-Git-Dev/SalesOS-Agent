@@ -227,18 +227,3 @@ def mock_agent_llm():
         yield mock_llm
 
 
-# ═══════════════════════════════════════════════════════════════════════════
-# 3. Sample data helpers
-# ═══════════════════════════════════════════════════════════════════════════
-
-SAMPLE_CHART_DATA_SINGLE = json.dumps([
-    {"month": "Jan", "revenue": 10000},
-    {"month": "Feb", "revenue": 15000},
-    {"month": "Mar", "revenue": 12000},
-])
-
-SAMPLE_CHART_DATA_MULTI = json.dumps([
-    {"month": "Jan", "revenue": 10000, "costs": 7000},
-    {"month": "Feb", "revenue": 15000, "costs": 9000},
-    {"month": "Mar", "revenue": 12000, "costs": 8000},
-])

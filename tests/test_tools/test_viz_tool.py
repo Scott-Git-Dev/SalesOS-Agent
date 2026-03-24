@@ -12,11 +12,8 @@ Altair saves HTML to disk; we assert:
 """
 
 import json
-import os
 import pytest
-import tempfile
-from pathlib import Path
-from unittest.mock import patch
+from unittest.mock import patch, MagicMock
 from pydantic import ValidationError
 
 
@@ -224,5 +221,5 @@ class TestWikiSummary:
         assert "machine_learning" in called_url
 
 
-# Need MagicMock at module level for the wiki tests in the same file
-from unittest.mock import MagicMock
+
+

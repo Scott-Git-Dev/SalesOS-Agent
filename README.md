@@ -8,13 +8,13 @@
   <img src="images/ui.png" alt="Screenshot" width="800"/>
 </p>
 
-It is a learning project that is built for local development that incorporates:
+It is a project that is built for local development that incorporates:
 - smart SQL generation,
 - retrieval of content,
 - and agent decision-making  
-into a simple assistant that can answer sales questions.
+into a simple assistant that can answer sales questions across documents, databases, and more!
 
-I built this to experiment, practice applying GenAI concepts, and share ideas. If you're curious how concepts like RAG and SQL tools work together with an agent, this repo is a great place to start! 
+I built this to experiment, practice applying GenAI concepts, and share ideas. If you're curious how concepts like RAG and SQL tools work together with an agent, this is a great place to start! 
 
 ---
 
@@ -354,6 +354,37 @@ SalesOS-Agent/
 3. `tools/knowledge_tool.py` (simplest tool - RAG search)
 4. `tools/sales_tool.py` (LLM SQL calls)
 5. `static/index.html` (web interface)
+
+## Testing and Evaluation
+
+The project includes three layers of testing, each with a different purpose and requirement.
+
+### Unit Tests
+Cover individual tool functions with the LLM fully mocked — no model server required. These test SQL validation, RAG score filtering, schema caching, chart output, and Wikipedia error handling.
+
+### Integration Tests
+Run the real agent against real infrastructure. Require a running LLM server and are opt-in so they don't slow down the default test run.
+
+### Eval Framework
+Runs a golden set of 16 questions across five categories against the live agent, then scores each response two ways: heuristic checks (required strings, required tools called) and an LLM-as-judge that scores correctness, completeness, tool use, and groundedness on a 20-point scale. Note that the judge uses the same model as the agent, so scores reflect internal consistency more than independent correctness. Heuristic pass rate is a slightly more reliable signal, but in an enterprise these would be more advanced and likely use continuous monitoring. Results are written to JSON. An HTML report can be generated separately by passing the results file to `tests/eval/eval_report.py`.
+
+
+**Eval categories:** `SQL` `RAG` `MULTI_TOOL` `SCOPE` `PROMPT_ADHERENCE`
+
+
+<p align="center">
+  <img src="images/eval_report.png" alt="Screenshot" width="800"/>
+</p>
+
+
+### Running Tests
+```bash
+python run_tests.py                    # unit tests only
+python run_tests.py --integration      # unit + integration
+python run_tests.py --eval             # unit + full eval run
+python run_tests.py --eval --no-judge  # eval with heuristics only
+python run_tests.py --category SQL     # eval one category
+```
 
 ---
 
