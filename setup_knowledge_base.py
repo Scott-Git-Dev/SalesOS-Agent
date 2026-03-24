@@ -13,7 +13,7 @@ from langchain_community.document_loaders import (
     JSONLoader, UnstructuredHTMLLoader,
 )
 
-from config import (CHROMA_DB_PATH, DOCS_PATH, EMBEDDING_MODEL,CHUNK_SIZE, CHUNK_OVERLAP)
+from config import (CHROMA_COLLECTION_METADATA, CHROMA_DB_PATH, DOCS_PATH, EMBEDDING_MODEL,CHUNK_SIZE, CHUNK_OVERLAP)
 from rag_metadata import RAGMetadataManager
 
 
@@ -140,7 +140,7 @@ def setup_knowledge_base(
     vectorstore = Chroma(
         persist_directory=db_path,
         embedding_function=embeddings,
-        collection_metadata={"hnsw:space": "cosine"}
+        collection_metadata=CHROMA_COLLECTION_METADATA
     )
     
     # Handle deletions

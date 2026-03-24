@@ -11,7 +11,7 @@ from langchain_huggingface import HuggingFaceEmbeddings
 # Import config
 import sys
 from pathlib import Path
-from config import CHROMA_DB_PATH, EMBEDDING_MODEL, DEBUG_MODE, TOP_K, MIN_RAG_SCORE
+from config import CHROMA_DB_PATH, EMBEDDING_MODEL, DEBUG_MODE, TOP_K, MIN_RAG_SCORE, CHROMA_COLLECTION_METADATA
 
 sys.path.append(str(Path(__file__).parent.parent))
 
@@ -27,7 +27,8 @@ def _init_vectorstore():
         embeddings = HuggingFaceEmbeddings(model_name=EMBEDDING_MODEL)
         _VECTORSTORE = Chroma(
             persist_directory=str(CHROMA_DB_PATH), 
-            embedding_function=embeddings
+            embedding_function=embeddings,
+            collection_metadata=CHROMA_COLLECTION_METADATA
         )
     return _VECTORSTORE
 

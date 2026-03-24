@@ -14,11 +14,11 @@ Run with:
 import os
 import json
 import sqlite3
-import tempfile
 import pytest
 from pathlib import Path
 from unittest.mock import MagicMock, patch
-from typing import Generator
+from config import CHROMA_COLLECTION_METADATA
+
 
 # ── tell the app to use our temp paths ─────────────────────────────────────
 os.environ.setdefault("OPENAI_API_KEY", "not_a_real_key")
@@ -162,7 +162,7 @@ def tmp_chroma_db(tmp_path_factory) -> Path:
     vectorstore = Chroma(
         persist_directory=str(db_dir),
         embedding_function=embeddings,
-        collection_metadata={"hnsw:space": "cosine"},
+        collection_metadata=CHROMA_COLLECTION_METADATA
     )
 
     from langchain_core.documents import Document

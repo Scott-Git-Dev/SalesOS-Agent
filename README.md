@@ -311,27 +311,41 @@ The web UI provides a modern, professional interface for interacting with the Sa
 
 ```
 SalesOS-Agent/
-├── agent.py                 # Agent setup and main loop (CLI)
-├── api.py                   # FastAPI web server
-├── config.py                # LLM endpoint, paths, settings
-│
-├── setup_sales_db.py        # Creates SQLite with fake data
-├── setup_knowledge_base.py  # Converts docs → vectors
-├── rag_metadata.py          # Metadata class for ChromaDB setup
+├── agent.py
+├── api.py
+├── config.py
+├── setup_sales_db.py
+├── setup_knowledge_base.py
+├── rag_metadata.py
+├── run_tests.py                 # Unified test + eval runner
 │
 ├── tools/
-│   ├── sales_tool.py        # SQL query tool (nested LLM)
-│   ├── knowledge_tool.py    # RAG search with vector similarity
-│   ├── viz_tool.py          # Chart creation (Altair)
-│   └── web_tools.py         # Wikipedia lookup
+│   ├── sales_tool.py
+│   ├── knowledge_tool.py
+│   ├── viz_tool.py
+│   └── web_tools.py
+│
+├── utils/
+│   ├── logger.py                # Structured logging
+│   └── error_handler.py        
+│
+├── tests/
+│   ├── conftest.py              # Shared fixtures, mocked infra
+│   ├── test_agent/
+│   │   └── test_agent_routing.py    # Tool selection, memory isolation
+│   ├── test_tools/
+│   │   ├── test_sales_tool.py       # SQL gen, validation, formatting
+│   │   ├── test_knowledge_tool.py   # RAG filtering, semantic accuracy
+│   │   └── test_viz_tool.py         # Chart output, error handling
+│   └── eval/
+│       ├── eval_cases.py            # Golden test case definitions
+│       ├── eval_judge.py            # LLM-as-judge scoring
+│       ├── eval_runner.py           # End-to-end eval orchestration
+│       └── eval_report.py           # HTML report generator
 │
 ├── static/
-│   └── index.html           # Web UI interface
-│
-├── kb/                      # Put your documents here
-├── sales_db/                # Generated SQLite database
-├── chroma_db/               # Generated vector database
-└── charts/                  # Generated interactive charts (HTML)
+│   └── index.html
+└── kb/
 ```
 
 **Start reading here:**

@@ -19,7 +19,7 @@ from utils.logger import setup_logging, get_logger
 
 # Import agent
 from agent import create_sales_agent, ask_agent, stream_agent
-from config import REQUEST_TIMEOUT, FRONTEND_HOST, FRONTEND_PORT
+from config import REQUEST_TIMEOUT
 
 
 @asynccontextmanager
@@ -202,6 +202,7 @@ async def ask_question(request_data: QuestionRequest, request: Request):
 
 @app.post("/ask/stream")
 async def ask_question_stream(request_data: QuestionRequest, request: Request):
+    # TODO: Requires further updates to properly stream responses, currently uses typewriter effect
     """
     Ask the agent a question with streaming response (Server-Sent Events)
     

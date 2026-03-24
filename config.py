@@ -15,6 +15,7 @@ BASE_DIR = Path(__file__).parent
 # Database paths
 SALES_DB_PATH = BASE_DIR / "sales_db" / "sales_data.db"
 CHROMA_DB_PATH = BASE_DIR / "chroma_db"
+CHROMA_COLLECTION_METADATA = {"hnsw:space": "cosine"}
 DOCS_PATH = BASE_DIR / "kb"
 
 # Logs directory
@@ -47,7 +48,7 @@ FRONTEND_PORT = "8000"
 # RAG Configuration
 # ============================================================================
 
-RAG_AVAILABLE = True  
+
 EMBEDDING_MODEL = "sentence-transformers/all-MiniLM-L6-v2"
 
 # Supported file types for document ingestion
@@ -122,7 +123,7 @@ def validate_config() -> bool:
         warnings.append("  → Add documents to kb/ folder")
     
     # Check ChromaDB
-    if RAG_AVAILABLE and not CHROMA_DB_PATH.exists():
+    if not CHROMA_DB_PATH.exists():
         errors.append(f"ChromaDB not initialized: {CHROMA_DB_PATH}")
         errors.append("  → Run: python setup_knowledge_base.py")
     
